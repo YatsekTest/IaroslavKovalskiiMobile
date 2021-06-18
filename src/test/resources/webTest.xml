@@ -5,13 +5,17 @@
     <parameter name="platformName" value="Android"/>
     <parameter name="browserName" value="Chrome"/>
     <test name="Web tests">
-        <groups>
+        <!--<groups>
             <run>
                 <include name="web"/>
+                <exclude name="native"/>
             </run>
         </groups>
         <packages>
             <package name="tests"/>
-        </packages>
+        </packages>-->
+        <classes>
+            <class name="tests.WebMobileTest"/>
+        </classes>
     </test>
 </suite>
