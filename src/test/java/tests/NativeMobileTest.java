@@ -2,34 +2,37 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import testData.TestDataProvider;
 
 public class NativeMobileTest extends BaseTest {
 
-    //TODO: All Strings to properties
-    //TODO: Data provider is necessary here
-    @Test(groups = {"native"}, description = "This simple test just clicks on Register button.")
-    public void simpleNativeTest() throws NoSuchFieldException, IllegalAccessException {
-        registerUser();
-        System.out.println("User is registered.");
-        login();
-        System.out.println("User is logged in.");
-        Assert.assertEquals(pageObject.getElement("title").getText(), "BudgetActivity");
+    @Test(description = "This test asserts User registration and login in.",
+            dataProviderClass = TestDataProvider.class, dataProvider = "nativeTestData")
+    public void simpleNativeTest(String email, String userName, String password, String nativePageTitle)
+            throws NoSuchFieldException, IllegalAccessException {
+        registerUser(email, userName, password);
+        login(email, password);
+        Assert.assertEquals(pageObject.getElement("title").getText(), nativePageTitle);
         System.out.println("Register and Login Native Android test done.");
     }
 
-    private void login() throws NoSuchFieldException, IllegalAccessException {
-        pageObject.getElement("emailLoginField").sendKeys("mail@mail.ru");
-        pageObject.getElement("passwordLoginField").sendKeys("123456789");
-        pageObject.getElement("signInButton").click();
+    private void registerUser(String email, String userName, String password)
+            throws NoSuchFieldException, IllegalAccessException {
+        pageObject.getElement("registerButton").click();
+        pageObject.getElement("emailField").sendKeys(email);
+        pageObject.getElement("usernameField").sendKeys(userName);
+        pageObject.getElement("passwordField").sendKeys(password);
+        pageObject.getElement("confirmPasswordField").sendKeys(password);
+        pageObject.getElement("registerAccountButton").click();
+        System.out.println("User is registered.");
     }
 
-    private void registerUser() throws NoSuchFieldException, IllegalAccessException {
-        pageObject.getElement("registerButton").click();
-        pageObject.getElement("emailField").sendKeys("mail@mail.ru");
-        pageObject.getElement("usernameField").sendKeys("User");
-        pageObject.getElement("passwordField").sendKeys("123456789");
-        pageObject.getElement("confirmPasswordField").sendKeys("123456789");
-        pageObject.getElement("registerAccountButton").click();
+    private void login(String email, String password)
+            throws NoSuchFieldException, IllegalAccessException {
+        pageObject.getElement("emailLoginField").sendKeys(email);
+        pageObject.getElement("passwordLoginField").sendKeys(password);
+        pageObject.getElement("signInButton").click();
+        System.out.println("User is logged in.");
     }
 
 }

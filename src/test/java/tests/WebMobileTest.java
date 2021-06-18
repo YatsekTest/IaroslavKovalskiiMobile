@@ -5,26 +5,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import testData.TestDataProvider;
 
 public class WebMobileTest extends BaseTest {
 
-    //TODO: Data provider is necessary here
-    @Test(groups = {"web"}, description = "This test searches results for keyword on Google-search web-page.")
-    public void openWebPageTest() throws NoSuchFieldException, IllegalAccessException {
-        openSearchPage("https://google.com"); //TODO: site url to properties
-        searchKeyword("EPAM"); //TODO: keyword for search to properties
+    @Test(description = "This test searches results for keyword on Google-search web-page.",
+            dataProviderClass = TestDataProvider.class, dataProvider = "webTestData")
+    public void openWebPageTest(String url, String keyWord, String siteTitle)
+            throws NoSuchFieldException, IllegalAccessException {
+        openSearchPage(url, siteTitle);
+        searchKeyword(keyWord);
         Assert.assertTrue(pageObject.getElements("searchResults").size() > 0);
         Assert.assertTrue(pageObject.getElements("searchResults")
-                .get(0).getText().contains("EPAM")); //TODO: keyword for search to properties
+                .get(0).getText().contains(keyWord));
     }
 
-    private void openSearchPage(String url) {
+    private void openSearchPage(String url, String siteTitle) {
         getDriver().get(url);
         new WebDriverWait(getDriver(), 5)
                 .until(webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState")
                         .equals("complete"));
-        assert ((WebDriver) getDriver()).getTitle().equals("Google") //TODO: site title to properties
+        assert ((WebDriver) getDriver()).getTitle().equals(siteTitle)
                 : "This is not Google homepage!";
         System.out.println(getDriver().getTitle() + " site opening done.");
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PageObject implements IPageObject {
 
-    private Object anyPageObject;
+    private final Object anyPageObject;
 
     public PageObject(String appType, AppiumDriver appiumDriver) throws Exception {
         switch (appType) {

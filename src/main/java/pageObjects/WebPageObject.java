@@ -9,10 +9,10 @@ import java.util.List;
 
 public class WebPageObject {
 
-    @FindBy(xpath = "//input[@name='q']")
+    @FindBy(css = "input[name='q']")
     WebElement searchField;
 
-    @FindBy(xpath = "//div[@id='rso']/div")
+    @FindBy(css = "#rso [data-hveid]")
     private List<WebElement> searchResults;
 
     public WebPageObject(AppiumDriver appiumDriver) {
