@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Native mobile testing Suite">
+<suite name="Native Android testing Suite">
     <parameter name="appType" value="native"/>
     <parameter name="deviceName" value="emulator-5554"/>
     <parameter name="platformName" value="Android"/>

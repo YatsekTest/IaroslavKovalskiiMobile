@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WebPageObject {
 
-    @FindBy(css = "input[name='q']")
+    @FindBy(xpath = "//input[@name='q']")
     WebElement searchField;
 
     @FindBy(css = "#rso [data-hveid]")

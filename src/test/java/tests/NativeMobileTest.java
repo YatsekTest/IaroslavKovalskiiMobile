@@ -12,8 +12,8 @@ public class NativeMobileTest extends BaseTest {
             throws NoSuchFieldException, IllegalAccessException {
         registerUser(email, userName, password);
         login(email, password);
-        Assert.assertEquals(pageObject.getElement("title").getText(), nativePageTitle);
-        System.out.println("Register and Login Native Android test done.");
+        Assert.assertTrue(pageObject.getElement("title").getText().startsWith(nativePageTitle));
+        System.out.println("Register and Login Native test done.");
     }
 
     private void registerUser(String email, String userName, String password)

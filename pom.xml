@@ -8,12 +8,15 @@
     <artifactId>IaroslavKovalskiiMobile</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <token></token>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.4.0</version>
-<!--            <scope>test</scope>-->
             <exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
@@ -39,7 +42,7 @@
                         <suiteXmlFile>${suite.file}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemPropertyVariables>
-                        <ts.appium>http://localhost:4723/wd/hub</ts.appium>
+                        <ts.appium>https://EPM-TSTF:${token}@mobilecloud.epam.com/wd/hub</ts.appium>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -57,21 +60,42 @@
 
     <profiles>
         <profile>
-            <id>native</id>
+            <id>AndroidNative</id>
+            <properties>
+                <suite.file>./src/test/resources/androidNativeTest.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>AndroidWeb</id>
+            <properties>
+                <suite.file>./src/test/resources/androidWebTest.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>AndroidNativeCloud</id>
+            <properties>
+                <suite.file>./src/test/resources/androidNativeCloudTest.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>AndroidWebCloud</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <suite.file>./src/test/resources/nativeTest.xml</suite.file>
+                <suite.file>./src/test/resources/androidWebCloudTest.xml</suite.file>
             </properties>
         </profile>
         <profile>
-            <id>web</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
+            <id>iOSNativeCloud</id>
             <properties>
-                <suite.file>./src/test/resources/webTest.xml</suite.file>
+                <suite.file>./src/test/resources/iOSNativeCloudTest.xml</suite.file>
+            </properties>
+        </profile>
+        <profile>
+            <id>iOSWebCloud</id>
+            <properties>
+                <suite.file>./src/test/resources/iOSWebCloudTest.xml</suite.file>
             </properties>
         </profile>
     </profiles>
