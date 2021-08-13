@@ -1,4 +1,4 @@
-package setup;
+package interfaces;
 
 import io.appium.java_client.MobileDriver;
 

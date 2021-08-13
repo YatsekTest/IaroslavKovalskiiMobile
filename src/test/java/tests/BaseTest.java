@@ -1,4 +1,4 @@
-package setup;
+package tests;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import pageObjects.PageObject;
+import interfaces.IDriver;
+import interfaces.IPageObject;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -16,31 +18,26 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest implements IDriver {
 
     private static AppiumDriver appiumDriver;
-    private IPageObject pageObject;
+    protected IPageObject pageObject;
 
     @Override
     public AppiumDriver getDriver() {
         return appiumDriver;
     }
 
-    public IPageObject getPageObject() {
-        return pageObject;
-    }
-
     @Parameters({"platformName", "appType", "deviceName", "browserName", "app"})
-    //TODO: parameters to properties file
     @BeforeSuite(alwaysRun = true)
     public void setUp(String platformName, String appType, String deviceName,
                       @Optional("") String browserName, @Optional("") String app) throws Exception {
-        System.out.println("Before: app type is " + appType);
+        System.out.println("Before: app type is " + appType + ".");
         setAppiumDriver(platformName, deviceName, browserName, app);
         setPageObject(appType, appiumDriver);
     }
 
     @AfterSuite(alwaysRun = true)
     public void tearDown() {
-        System.out.println("After");
         appiumDriver.closeApp();
+        System.out.println("After: finished.");
     }
 
     private void setAppiumDriver(String platformName, String deviceName, String browserName, String app) {
@@ -53,7 +50,7 @@ public class BaseTest implements IDriver {
         desiredCapabilities.setCapability("browserName", browserName);
         desiredCapabilities.setCapability("chromedriverDisableBuildCheck", "true");
         try {
-            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), desiredCapabilities); //TODO: variable to properties
+            appiumDriver = new AppiumDriver(new URL(System.getProperty("ts.appium")), desiredCapabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
